@@ -4,6 +4,7 @@
     border: 0;
     font-size: 100%;
     font: inherit;
+    font-family: sans-serif;
     vertical-align: baseline;
 }
 
@@ -16,8 +17,8 @@
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: 34% 1fr 1fr;
+    grid-template-rows: 34% 1fr 1fr;
     height: 250px;
     width: 250px;
     border: 2px solid black;
@@ -25,4 +26,8 @@
 
 .square {
     border: 1px solid black;
+    font-size: 40px;
+    font-weight: bolder;
+    text-align: center;
+    line-height: 80px;
 }
