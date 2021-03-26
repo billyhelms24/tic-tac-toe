@@ -11,6 +11,7 @@ const GameBoard = (() => {
 
     const Game = (() => {
         let currentPlayer = playerX;
+        let gameOver = false;
         const getCurrentPlayer = () => {
             return currentPlayer;
         };
@@ -45,10 +46,10 @@ const GameBoard = (() => {
             }
         };
         const gameEnd = () => {
-            console.log("game over");
+            gameOver = true;
         };
         const squareClick = (e, square) => {
-            if (!e.target.innerHTML) {
+            if (!e.target.innerHTML && !gameOver) {
                 const squareIndex = parseInt(square.value);
                 square.innerHTML = currentPlayer.getSymbol();
                 board[squareIndex] = square.innerHTML;
