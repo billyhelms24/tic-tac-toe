@@ -1,13 +1,13 @@
-const Player = (symbol) => {
-    const getSymbol = () => symbol;
-    return { getSymbol };
-};
-
-playerX = Player("X");
-playerO = Player("O");
-
 const GameBoard = (() => {
     let board = [];
+
+    const Player = (symbol) => {
+        const getSymbol = () => symbol;
+        return { getSymbol };
+    };
+
+    playerX = Player("X");
+    playerO = Player("O");
 
     const Game = (() => {
         let currentPlayer = playerX;
