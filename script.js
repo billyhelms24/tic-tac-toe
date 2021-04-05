@@ -4,8 +4,14 @@ const GameBoard = (() => {
     const Player = (name, symbol, color) => {
         const getName = () => name;
         const getSymbol = () => symbol;
-        const getColor = () => color;
-        return { getName, getSymbol, getColor };
+        // const getColor = () => color;
+        const setName = (newName) => {
+            name = newName;
+        };
+        /* const setColor = (newColor) => {
+            color = newColor;
+        }; */
+        return { getName, getSymbol, setName };
     };
 
     playerX = Player("Player 1", "X", "#000000");
@@ -27,7 +33,7 @@ const GameBoard = (() => {
             return currentPlayer;
         };
 
-        const changeCurrentPlayer = () => {
+        const changeTurn = () => {
             if (currentPlayer === playerX) {
                 currentPlayer = playerO;
             } else {
@@ -69,7 +75,7 @@ const GameBoard = (() => {
                 board[squareIndex] = square.innerHTML;
                 checkWinner();
                 if (!gameOver) {
-                    changeCurrentPlayer();
+                    changeTurn();
                 }
                 DisplayController.updateDisplay();
             }
@@ -78,7 +84,7 @@ const GameBoard = (() => {
         return {
             getCurrentPlayer,
             resetCurrentPlayer,
-            changeCurrentPlayer,
+            changeTurn,
             squareClick,
             setGameOver,
             getGameOver,
@@ -97,25 +103,32 @@ const GameBoard = (() => {
                 turnCounter.innerHTML = `${Game.getCurrentPlayer().getName()} is the Winner!`;
             }
         };
-
-        updateDisplay();
-
         return { updateDisplay };
     })();
 
-    const resetBtn = document.querySelector("#resetBtn");
-    resetBtn.addEventListener("click", () => {
-        board = [];
-        Game.setGameOver(false);
-        Game.resetCurrentPlayer();
-        const squares = document.querySelectorAll(".square");
-        squares.forEach((i) => {
-            i.innerHTML = "";
+    const ResetBtn = (() => {
+        document.querySelector("#resetBtn").addEventListener("click", () => {
+            board = [];
+            Game.setGameOver(false);
+            Game.resetCurrentPlayer();
+            document.querySelectorAll(".square").forEach((i) => {
+                i.innerHTML = "";
+            });
+            DisplayController.updateDisplay();
         });
-        DisplayController.updateDisplay();
-    });
+    })();
 
-    const grid = document.querySelector(".grid");
+    const NameBtn = (() => {
+        document.querySelector("#nameBtn").addEventListener("click", () => {
+            playerX.setName(
+                prompt(`Enter a new name for ${playerX.getName()}`)
+            );
+            playerO.setName(
+                prompt(`Enter a new name for ${playerO.getName()}`)
+            );
+            DisplayController.updateDisplay();
+        });
+    })();
 
     const render = (() => {
         for (let i = 0; i < 9; i++) {
@@ -125,7 +138,8 @@ const GameBoard = (() => {
             square.addEventListener("click", (e) => {
                 Game.squareClick(e, square);
             });
-            grid.appendChild(square);
+            document.querySelector(".grid").appendChild(square);
         }
+        DisplayController.updateDisplay();
     })();
 })();
